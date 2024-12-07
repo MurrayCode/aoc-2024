@@ -4,8 +4,9 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"strconv"
 	"strings"
+
+	s "github.com/murraycode/aoc-2024/pkg/slices"
 )
 
 func main() {
@@ -17,20 +18,11 @@ func getRules(input string) []string {
 	return strings.Split(input, "|")
 }
 
-func contains(arr []string, item string) bool {
-	for _, i := range arr {
-		if i == item {
-			return true
-		}
-	}
-	return false
-}
-
 func checkRule(rule []string, updates string) bool {
 	arr := strings.Split(updates, ",")
 	first := false
-	containsFirst := contains(arr, rule[0])
-	containsSecond := contains(arr, rule[1])
+	containsFirst := s.Contains(arr, rule[0])
+	containsSecond := s.Contains(arr, rule[1])
 	if !containsFirst || !containsSecond {
 		return true
 	}
@@ -46,12 +38,6 @@ func checkRule(rule []string, updates string) bool {
 		}
 	}
 	return true
-}
-
-func getMiddleValue(arr []string) int {
-	m := len(arr) / 2
-	i, _ := strconv.Atoi(arr[m])
-	return i
 }
 
 func Part1(input string) int {
@@ -78,7 +64,7 @@ func Part1(input string) int {
 			}
 		}
 		if ok {
-			res += getMiddleValue(strings.Split(update, ","))
+			res += s.GetMiddleValueConvertToInt(strings.Split(update, ","))
 		}
 	}
 	return res
